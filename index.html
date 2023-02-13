@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Bai1</title>
+</head>
+<body>
+    <div class="bxslider">
+        <div class="slides active"><img class="imgslide" src="/assets/images/coffee1.jpg" title="Funky roots"></div>
+        <div class="slides"><img class="imgslide" src="/assets/images/coffee2.jpg" title="The long and winding road"></div>
+        <div class="slides"><img class="imgslide" src="/assets/images/coffee3.jpg" title="Happy trees"></div>
+        <div class="controls">
+            <a class="prev" onclick="selectSlides(-1)">&#10094;</a>
+            <a class="next" onclick="selectSlides(1)">&#10095;</a>
+        </div>
+        <div class="blur">
+            <p class="text">Funky roots</p>
+        </div>   
+        <div class="dots">
+            <span class="dot dotactive" onclick="currentSlide(0)" ></span>
+            <span class="dot" onclick="currentSlide(1)" ></span>
+            <span class="dot" onclick="currentSlide(2)" ></span>
+        </div>
+    </div>    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+        var slideIndex = 0;
+        var currentIndex = 0;
+        showSlides(slideIndex);
+
+        function selectSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("slides");
+            var dots = document.getElementsByClassName("dot");
+            var img = document.getElementsByClassName("imgslide");
+            if (n > slides.length-1) {slideIndex = 0}
+            if (n < 0) {slideIndex = slides.length-1}
+            $(document).ready(function(){
+                for (i = 0; i < dots.length; i++) {
+                    slides[i].className = slides[i].className.replace(" active", "");
+                    dots[i].className = dots[i].className.replace(" dotactive", "");
+                }
+                $(slides[currentIndex]).fadeOut();
+                $(slides[slideIndex]).fadeIn("slow", () => {
+                    dots[slideIndex].className += " dotactive";
+                    slides[slideIndex].className += " active";
+                });
+                var title = $(img[slideIndex]).attr("title");
+                console.log($(img[slideIndex]).attr("title"));
+                $("p").html(title);
+                currentIndex = slideIndex;
+            });
+        }   
+    </script>
+</body>
+</html>
